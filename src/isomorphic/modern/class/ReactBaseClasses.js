@@ -65,6 +65,7 @@ ReactComponent.prototype.setState = function(partialState, callback) {
   this.updater.enqueueSetState(this, partialState, callback, 'setState');
 };
 
+// 具体的使用场景是什么
 /**
  * Forces an update. This should only be invoked when it is known with
  * certainty that we are **not** in a DOM transaction.
@@ -134,14 +135,18 @@ function ReactPureComponent(props, context, updater) {
   this.updater = updater || ReactNoopUpdateQueue;
 }
 
+// 继承？
 function ComponentDummy() {}
 ComponentDummy.prototype = ReactComponent.prototype;
 var pureComponentPrototype = (ReactPureComponent.prototype = new ComponentDummy());
 pureComponentPrototype.constructor = ReactPureComponent;
-// Avoid an extra prototype jump for these methods.
+
+// Avoid an extra prototype jump for these methods.没太懂
 Object.assign(pureComponentPrototype, ReactComponent.prototype);
+
 pureComponentPrototype.isPureReactComponent = true;
 
+// react的异步组件
 function ReactAsyncComponent(props, context, updater) {
   // Duplicated from ReactComponent.
   this.props = props;
@@ -156,7 +161,11 @@ var asyncComponentPrototype = (ReactAsyncComponent.prototype = new ComponentDumm
 asyncComponentPrototype.constructor = ReactAsyncComponent;
 // Avoid an extra prototype jump for these methods.
 Object.assign(asyncComponentPrototype, ReactComponent.prototype);
+
+// 实验性组件还不问题，友好的属性提示
 asyncComponentPrototype.unstable_isAsyncReactComponent = true;
+
+// 异步组件单独的render？？？
 asyncComponentPrototype.render = function() {
   return this.props.children;
 };

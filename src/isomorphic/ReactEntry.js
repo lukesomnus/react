@@ -10,7 +10,9 @@
 'use strict';
 
 var ReactBaseClasses = require('ReactBaseClasses');
+// 提供了一些处理children的一些公共方法
 var ReactChildren = require('ReactChildren');
+// reactElement的一些方法，创建element
 var ReactElement = require('ReactElement');
 var ReactVersion = require('ReactVersion');
 
